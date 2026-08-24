@@ -558,7 +558,7 @@
     </div>
     <div class="chart-card">
       <h3>Por categoría</h3>
-      <div class="chart-sub">Cantidad de tramos según intervención</div>
+      <div class="chart-sub">Cantidad de baches según intervención</div>
       <div id="chartCategory"></div>
     </div>
     <div class="chart-card">
@@ -648,6 +648,13 @@
   // ---------- Global totals (for KPI bar reference) ----------
   var GLOBAL = computeAgg(RAW);
 
+  function getCalendarMonths(mesLabel){
+    // "Enero-Febrero 2026" -> ["Enero","Febrero"]; "Marzo 2026" -> ["Marzo"]
+    if(!mesLabel) return [];
+    var noYear = mesLabel.replace(/\d{4}/,'').trim();
+    return noYear.split('-').map(function(s){ return s.trim(); }).filter(Boolean);
+  }
+
   function computeAgg(rows){
     var m2 = 0, ton = 0, ok = 0, pend = 0;
     var locSet = {}, mesSet = {};
@@ -656,7 +663,7 @@
       ton += (r.toneladas || 0);
       if(r.estado === 'Realizado') ok++; else pend++;
       locSet[r.localidad] = true;
-      mesSet[r.mes_key] = true;
+      getCalendarMonths(r.mes).forEach(function(m){ mesSet[m] = true; });
     });
     return {
       m2: m2, ton: ton, ok: ok, pend: pend, total: rows.length,
@@ -750,14 +757,14 @@
       value: function(a){ return a.ton; }, fmt: function(v){ return fmtNum(v,2)+' t'; },
       pct: function(a){ return GLOBAL.ton ? (a.ton/GLOBAL.ton*100) : 0; },
       sub: function(a){ return fmtNum(GLOBAL.ton,0)+' t total acumulado'; } },
-    { key:'ok', label:'Tramos completados', color:'var(--green)', soft:'var(--green-soft)', icon:'check',
+    { key:'ok', label:'Baches completados', color:'var(--green)', soft:'var(--green-soft)', icon:'check',
       value: function(a){ return a.ok; }, fmt: function(v){ return fmtNum(v,0); },
       pct: function(a){ return a.total ? (a.ok/a.total*100) : 0; },
-      sub: function(a){ return 'de '+fmtNum(a.total,0)+' tramos en el filtro'; } },
-    { key:'pend', label:'Tramos pendientes', color:'var(--red)', soft:'var(--red-soft)', icon:'alert',
+      sub: function(a){ return 'de '+fmtNum(a.total,0)+' baches en el filtro'; } },
+    { key:'pend', label:'Baches pendientes', color:'var(--red)', soft:'var(--red-soft)', icon:'alert',
       value: function(a){ return a.pend; }, fmt: function(v){ return fmtNum(v,0); },
       pct: function(a){ return a.total ? (a.pend/a.total*100) : 0; },
-      sub: function(a){ return 'de '+fmtNum(a.total,0)+' tramos en el filtro'; } },
+      sub: function(a){ return 'de '+fmtNum(a.total,0)+' baches en el filtro'; } },
     { key:'loc', label:'Localidades con obra', color:'var(--violet)', soft:'var(--violet-soft)', icon:'pin',
       value: function(a){ return a.locCount; }, fmt: function(v){ return fmtNum(v,0)+' <small>/ 4</small>'; },
       pct: function(a){ return (a.locCount/TARGET_LOCALIDADES.length*100); },
