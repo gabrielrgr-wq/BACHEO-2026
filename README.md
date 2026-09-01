@@ -73,7 +73,7 @@ El Excel de origen (`BACHEO_GRINOR_2026.xlsx`) **no trae coordenadas por tramo**
 
 El Excel provisto (`BACHEO_GRINOR_2026.xlsx`) es una **planilla de producción de obra** (bacheo ya ejecutado, organizado por calle/tramo/mes, con M² y toneladas), **no** un export de reclamos de un Formulario. Por eso este dashboard funciona como panel de seguimiento de obra:
 
-* No incluye "fecha de reclamo" día a día — la granularidad real de la fuente es **mensual** (los períodos de reporte de la planilla: Enero-Febrero, Marzo, Abril, Mayo, Junio, Julio 2026). El filtro "Desde / Hasta" del panel avanzado trabaja con esos períodos.
+* No incluye "fecha de reclamo" día a día — la granularidad real de la fuente es **mensual** (los períodos de reporte de la planilla: Enero-Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto 2026). El filtro "Desde / Hasta" del panel avanzado trabaja con esos períodos.
 * No incluye coordenadas GPS ni estado de reclamo ciudadano — el campo **Estado** que ves (Realizado / Pendiente) refleja si el tramo fue bacheado o figura como "Sin Hacer" en la planilla de obra.
 * Si más adelante conseguís el export real de reclamos de Formularios (con estado, localidad, categoría, fecha y GPS), decíselo a Claude y se puede cruzar con esta base o migrar el dashboard a esa estructura sin perder el diseño ni las funcionalidades ya construidas.
 
